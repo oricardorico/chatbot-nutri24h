@@ -18,9 +18,10 @@
       font-weight: bold;
     }
     #chat-box {
-      height: 70vh;
+      height: calc(100vh - 60px);
       overflow-y: auto;
       padding: 10px;
+      padding-bottom: 80px;
       display: flex;
       flex-direction: column;
     }
@@ -41,10 +42,15 @@
       background-color: white;
     }
     #input-area {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
       display: flex;
       padding: 10px;
       background: #fff;
       border-top: 1px solid #ccc;
+      box-shadow: 0 -1px 4px rgba(0,0,0,0.1);
     }
     input {
       flex: 1;
@@ -93,7 +99,6 @@
       appendMessage("user", message);
       input.value = "";
 
-      // Mostrar "digitando..."
       const typingMsg = appendMessage("bot", "<i>Lillian está digitando...</i>");
 
       try {
@@ -104,11 +109,8 @@
         });
 
         const data = await response.json();
-
-        // Remover "digitando..."
         typingMsg.remove();
 
-        // Adicionar efeito de digitação na resposta
         const finalMsg = appendMessage("bot", "");
         let i = 0;
         const text = data.reply;
@@ -119,7 +121,6 @@
           i++;
           if (i > text.length) clearInterval(typingInterval);
         }, typingSpeed);
-
       } catch (err) {
         typingMsg.remove();
         appendMessage("bot", "Desculpe, algo deu errado 😢");
