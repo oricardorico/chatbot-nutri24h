@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Nutri 24h - Chat com a Nutricionista</title>
+</head>
+<body>
+  <div id="chat-container" style="max-width: 500px; margin: auto;">
+    <h2>👩‍⚕️ Converse com a Lillian - Nutricionista 24h</h2>
+    <div id="chat-box" style="height: 400px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background: #f9f9f9;"></div>
+    <input type="text" id="user-input" placeholder="Digite sua dúvida..." style="width: 100%; padding: 10px;" />
+    <button onclick="sendMessage()" style="width: 100%; padding: 10px; margin-top: 5px;">Enviar</button>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById("user-input");
+      const message = input.value.trim();
+      if (!message) return;
+
+      const chatBox = document.getElementById("chat-box");
+      chatBox.innerHTML += `<p><strong>Você:</strong> ${message}</p>`;
+      input.value = "";
+
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await response.json();
+      chatBox.innerHTML += `<p><strong>Lillian:</strong> ${data.reply}</p>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+</body>
+</html>
