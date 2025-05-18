@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
+
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Fale com a Nutri</title>
-  <style>
+<meta charset="utf-8"/>
+<title>Fale com a Nutri</title>
+<style>
     body {
       margin: 0;
       font-family: sans-serif;
@@ -95,20 +96,16 @@
   </style>
 </head>
 <body>
-
-  <header>
+<header>
     💬 Fale com a Nutri
     <button id="reset-btn" onclick="resetChat()">Nova dúvida</button>
-  </header>
-
-  <div id="chat-box"></div>
-
-  <div id="input-area">
-    <input type="text" id="user-input" placeholder="Digite sua dúvida..." />
-    <button onclick="sendMessage()">Enviar</button>
-  </div>
-
-  <script>
+</header>
+<div id="chat-box"></div>
+<div id="input-area">
+<input id="user-input" placeholder="Digite sua dúvida..." type="text"/>
+<button onclick="sendMessage()">Enviar</button>
+</div>
+<script>
     let chatHistory = [];
 
     function appendMessage(role, text) {
@@ -164,6 +161,5 @@
       chatHistory = [];
     }
   </script>
-
 </body>
 </html>
