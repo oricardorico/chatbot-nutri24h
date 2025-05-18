@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,9 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fale com a Nutri</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: sans-serif;
@@ -42,22 +41,27 @@
       overflow-y: auto;
       padding: 10px;
       background: #ece5dd;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
     .message {
-      margin: 8px 0;
       max-width: 75%;
       padding: 10px;
       border-radius: 10px;
       font-size: 15px;
       line-height: 1.4em;
+      word-wrap: break-word;
     }
     .user {
       align-self: flex-end;
       background-color: #dcf8c6;
+      border-bottom-right-radius: 0;
     }
     .bot {
       align-self: flex-start;
       background-color: white;
+      border-bottom-left-radius: 0;
     }
     #input-area {
       display: flex;
@@ -94,7 +98,7 @@
 <body>
   <div class="chat-container">
     <header>
-      <span>🛋️ Fale com a Nutri</span>
+      <span>💬 Fale com a Nutri</span>
       <button class="clear-button" onclick="clearChat()">Nova dúvida</button>
     </header>
     <div id="chat-box"></div>
@@ -108,7 +112,7 @@
     function appendMessage(role, text) {
       const div = document.createElement("div");
       div.className = "message " + role;
-      div.innerHTML = (role === "user" ? "🙋‍♀️ " : "👩‍🎓 ") + text;
+      div.innerHTML = (role === "user" ? "🙋‍♀️ " : "👩‍⚕️ ") + text;
       document.getElementById("chat-box").appendChild(div);
       document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
     }
@@ -129,19 +133,15 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message })
         });
+
         const data = await response.json();
-
         const botMessages = document.querySelectorAll(".bot");
-        const lastBot = botMessages[botMessages.length - 1];
-        lastBot.remove();
-
+        botMessages[botMessages.length - 1].remove();
         appendMessage("bot", data.reply);
       } catch (err) {
         const botMessages = document.querySelectorAll(".bot");
-        const lastBot = botMessages[botMessages.length - 1];
-        lastBot.remove();
-
-        appendMessage("bot", "Desculpe, algo deu errado 😭");
+        botMessages[botMessages.length - 1].remove();
+        appendMessage("bot", "Desculpe, algo deu errado 😢");
       }
     }
 
